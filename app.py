@@ -2,6 +2,7 @@ from flask import Flask
 from flasgger import Swagger
 from api.route.home import home_api
 from api.route.user_route import user_api
+from api.route.task_route import task_api
 
 def create_app():
     app = Flask(__name__)
@@ -14,6 +15,7 @@ def create_app():
     app.config.from_pyfile('config.py')
     app.register_blueprint(home_api, url_prefix='/api')
     app.register_blueprint(user_api, url_prefix='/api/users')
+    app.register_blueprint(task_api, url_prefix='/api/tasks')
 
     return app
 
