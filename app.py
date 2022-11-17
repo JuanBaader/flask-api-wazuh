@@ -13,7 +13,7 @@ def create_app():
      ## Initialize Config
     app.config.from_pyfile('config.py')
     app.register_blueprint(home_api, url_prefix='/api')
-    app.register_blueprint(user_api, url_prefix='/api/user')
+    app.register_blueprint(user_api, url_prefix='/api/users')
 
     return app
 
