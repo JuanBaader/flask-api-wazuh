@@ -1,10 +1,13 @@
 from flask_marshmallow import Schema
-from marshmallow.fields import Str
+from marshmallow.fields import Str, Int, Bool
 
 
 class TaskSchema(Schema):
     class Meta:
         # Fields to expose
-        fields = ["message"]
+        fields = ["user_id", "id", "title", "completed"]
 
-    message = Str()
+    user_id = Int()
+    id = Int()
+    title = Str()
+    completed = Bool()

@@ -1,14 +1,29 @@
 from http import HTTPStatus
-from flask import Blueprint
+from flask import Blueprint,request
 from flasgger import swag_from
 from api.model.task_model import TaskModel
 from api.schema.task_schema import TaskSchema
+from api.service.task_service import TaskService
 
 task_api = Blueprint('tasks', __name__)
 
 
 @task_api.route('/', methods=['GET'])
 @swag_from({
+    "parameters": [
+        {
+            "name": "completed",
+            "in": "path",
+            "type": "bool",
+            "required": False
+        },
+        {
+            "name": "title",
+            "in": "path",
+            "type": "string",
+            "required": False
+        }
+    ],
     'responses': {
         HTTPStatus.OK.value: {
             'description': 'Welcome to the Flask Starter Kit',
@@ -17,12 +32,14 @@ task_api = Blueprint('tasks', __name__)
     }
 })
 def tasks():
-    """
+    '''
     Returns all Tasks
     Method that returns a list of all Tasks
     ---
-    """
-    return "tasks", 200
+    '''
+    args = request.args
+    taskService = TaskService()
+    return 'tasks', 200
 
 
 @task_api.route('/<tid>', methods=['GET'])
@@ -38,9 +55,9 @@ def tasks():
     }
 })
 def task_by_id(tid):
-    """
+    '''
     Returns one task
     Method that returns a list a task specified by its id
     ---
-    """
-    return "tasks", 200
+    '''
+    return 'tasks', 200
