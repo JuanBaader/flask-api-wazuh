@@ -36,6 +36,15 @@ class UserModel:
     def get_address(self):
         return self.address
 
+    def get_phone(self):
+        return self.phone
+
+    def get_website(self):
+        return self.website
+
+    def get_company(self):
+        return self.company
+
     def to_dict(self):
         dictionary = self.__dict__
         dictionary["address"] = self.address.to_dict()

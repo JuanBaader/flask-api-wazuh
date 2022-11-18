@@ -11,6 +11,7 @@ taskService = TaskService()
 
 @task_api.route('/', methods=['GET'])
 @swag_from({
+    'tags': ['tasks'],
     'parameters': [
         {
             'name': 'completed',
@@ -26,7 +27,7 @@ taskService = TaskService()
         }
     ],
     'definitions': {
-        'to_return': {
+        'multiple_tasks': {
             'type': 'object',
             'properties': {
                 'total_items': {
@@ -35,12 +36,12 @@ taskService = TaskService()
                 'data': {
                     'type': 'array',
                     'items': {
-                        '$ref': '#/definitions/schema'
+                        '$ref': '#/definitions/task_schema'
                     }
                 }
             }
         },
-        'schema': {
+        'task_schema': {
             'type': 'object',
             'properties': {
                 'id': {
@@ -82,10 +83,13 @@ def tasks():
 
 @task_api.route('/<tid>', methods=['GET'])
 @swag_from({
+    'tags': ['tasks'],
     'responses': {
         HTTPStatus.OK.value: {
             'description': 'Welcome to the Flask Starter Kit',
-            'schema': TaskSchema
+            'schema': {
+                '$ref': '#/definitions/task_schema'
+            }
         },
         HTTPStatus.NOT_FOUND.value: {
             'description': 'No task with specified id'
