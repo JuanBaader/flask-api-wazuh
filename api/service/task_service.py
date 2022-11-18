@@ -1,7 +1,7 @@
 class TaskService:
     def get_tasks(self, completed=None, title=''):
         response = "task"
-        if (completed != None):
+        if completed != None:
             response = response + " completed?=" + completed
         response += "title?" + title
         return response
