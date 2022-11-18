@@ -1,5 +1,5 @@
 from api.dao.task_dao import TaskDao
-from flask import jsonify, abort
+from flask import abort
 
 
 class TaskService:

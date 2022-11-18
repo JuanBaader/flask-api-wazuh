@@ -11,61 +11,61 @@ taskService = TaskService()
 
 @task_api.route('/', methods=['GET'])
 @swag_from({
-    "parameters": [
+    'parameters': [
         {
-            "name": "completed",
-            "in": "path",
-            "type": "bool",
-            "required": False
+            'name': 'completed',
+            'in': 'path',
+            'type': 'bool',
+            'required': False
         },
         {
-            "name": "title",
-            "in": "path",
-            "type": "string",
-            "required": False
+            'name': 'title',
+            'in': 'path',
+            'type': 'string',
+            'required': False
         }
     ],
-    "definitions": {
-        "to_return": {
-            "type": "object",
-            "properties": {
-                "total_items": {
-                    "$ref": "#/definitions/total_items"
+    'definitions': {
+        'to_return': {
+            'type': 'object',
+            'properties': {
+                'total_items': {
+                    '$ref': '#/definitions/total_items'
                 },
-                "data": {
-                    "type": "array",
-                    "items": {
-                        '$ref': "#/definitions/schema"
+                'data': {
+                    'type': 'array',
+                    'items': {
+                        '$ref': '#/definitions/schema'
                     }
                 }
             }
         },
-        "schema": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
+        'schema': {
+            'type': 'object',
+            'properties': {
+                'id': {
+                    'type': 'integer'
                 },
-                "user_id": {
-                    "type": "integer"
+                'user_id': {
+                    'type': 'integer'
                 },
-                "title": {
-                    "type": "string"
+                'title': {
+                    'type': 'string'
                 },
-                "completed": {
-                    "type": "boolean"
+                'completed': {
+                    'type': 'boolean'
                 }
             }
         },
-        "total_items": {
-            "type": "integer"
+        'total_items': {
+            'type': 'integer'
         }
     },
     'responses': {
         HTTPStatus.OK.value: {
             'description': 'A list of task that match the parameters',
             'schema': {
-                "$ref": "#/definitions/to_return"
+                '$ref': '#/definitions/to_return'
             }
         }
     }

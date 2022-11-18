@@ -6,13 +6,13 @@ from api.schema.user_schema import UserSchema
 from api.service.user_service import UserService
 
 user_api = Blueprint('users', __name__)
-
+user_service = UserService()
 
 @user_api.route('/')
 @swag_from({
     'responses': {
         HTTPStatus.OK.value: {
-            'description': 'Welcome to the Flask Starter Kit',
+            'description': 'List of users',
             'schema': UserSchema
         }
     }
@@ -23,8 +23,8 @@ def users():
     Method that returns a list of all users
     ---
     """
-    user_service = UserService()
-    return "users", 200
+
+    return user_service.get_users()
 
 
 @user_api.route('/<uid>')
@@ -42,8 +42,7 @@ def user_by_id(uid):
     Method that returns a list of all users
     ---
     """
-    user_service = UserService()
-    return "user By id: " + uid, 200
+    return user_service.get_users_by_id(uid)
 
 
 @user_api.route('/<uid>/tasks')
@@ -55,14 +54,14 @@ def user_by_id(uid):
         }
     }
 })
-def user_task(uid):
+def user_tasks(uid):
     """
     Returns all users
     Method that returns a list of all users
     ---
     """
     user_service = UserService()
-    return "user´s tasks By id: " + uid, 200
+    return user_service.get_task_by_id_of_user(uid)
 
 
 @user_api.route('/<uid>/tasks/<tid>')
@@ -80,5 +79,4 @@ def user_task_by_id(uid, tid):
     Method that returns a list of all users
     ---
     """
-    user_service = UserService()
-    return "user task By uid: " + uid + " and tid:" + tid, 200
+    return user_service.get_task_by_id_of_user(uid, tid)
