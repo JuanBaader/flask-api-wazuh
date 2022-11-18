@@ -1,11 +1,12 @@
 from http import HTTPStatus
-from flask import Blueprint,request
+from flask import Blueprint, request
 from flasgger import swag_from
 from api.model.task_model import TaskModel
 from api.schema.task_schema import TaskSchema
 from api.service.task_service import TaskService
 
 task_api = Blueprint('tasks', __name__)
+taskService = TaskService()
 
 
 @task_api.route('/', methods=['GET'])
@@ -38,8 +39,11 @@ def tasks():
     ---
     '''
     args = request.args
-    taskService = TaskService()
-    return 'tasks', 200
+    # if args.has_key("completed"):
+    #     completed = args.completed
+    # else:
+    #     completed = None
+    return taskService.get_tasks(args.get('completed'), args.get('title')), 200
 
 
 @task_api.route('/<tid>', methods=['GET'])
@@ -60,4 +64,4 @@ def task_by_id(tid):
     Method that returns a list a task specified by its id
     ---
     '''
-    return 'tasks', 200
+    return taskService.get_task_by_id(int(tid)), 200
