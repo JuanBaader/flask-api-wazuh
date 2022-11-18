@@ -6,6 +6,9 @@ class UserModel:
     name = str()
     username = str()
     email = str()
+    phone = str(),
+    website = str(),
+    company = {}
 
     def __init__(self, user_dic):
         self.id = user_dic.get('id')
@@ -13,6 +16,10 @@ class UserModel:
         self.username = user_dic.get('username')
         self.email = user_dic.get('email')
         self.address = AddressModel(user_dic.get('address'))
+        self.phone = user_dic.get('phone')
+        self.website = user_dic.get('website')
+        self.company = user_dic.get('company')
+
 
     def get_id(self):
         return self.id
@@ -28,3 +35,8 @@ class UserModel:
 
     def get_address(self):
         return self.address
+
+    def to_dict(self):
+        dictionary = self.__dict__
+        dictionary["address"] = self.address.to_dict()
+        return dictionary

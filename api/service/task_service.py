@@ -20,6 +20,8 @@ class TaskService:
         return to_return
 
     def get_task_by_id(self, tid):
+        if not tid.isnumeric():
+            abort(404)
         task = self.taskDao.get_task_by_id(tid)
         if not task:
             abort(404)

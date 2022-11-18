@@ -26,3 +26,6 @@ class AddressModel:
 
     def get_geo(self):
         return self.geo
+
+    def to_dict(self):
+        return self.__dict__
