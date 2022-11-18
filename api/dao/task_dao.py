@@ -17,5 +17,11 @@ class TaskDao:
         filtered = list(filter(lambda x: title in x.get_title(), filtered))
         return filtered
 
-    def get_task_by_id(self, tid):
-        return list(filter(lambda x: x.get_id() == tid, self.tasks))
+    def get_task_by_id(self, task_id):
+        return list(filter(lambda x: x.get_id() == task_id, self.tasks))
+
+    def get_task_by_user_id(self, user_id):
+        return list(filter(lambda x: x.get_user_id() == user_id, self.tasks))
+
+    def get_task_by_id_by_user_id(self, user_id, task_id):
+        return list(filter(lambda x: (x.get_user_id() == user_id and x.get_id() == task_id), self.tasks))

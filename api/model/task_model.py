@@ -26,7 +26,7 @@ class TaskModel:
         return self.completed
 
     def __str__(self):
-        return self.to_json()
+        return self.toJSON()
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__,

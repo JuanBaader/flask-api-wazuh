@@ -60,8 +60,7 @@ def user_tasks(uid):
     Method that returns a list of all users
     ---
     """
-    user_service = UserService()
-    return user_service.get_task_by_id_of_user(uid)
+    return user_service.get_tasks_of_user(uid)
 
 
 @user_api.route('/<uid>/tasks/<tid>')
