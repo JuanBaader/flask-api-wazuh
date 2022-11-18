@@ -25,10 +25,48 @@ taskService = TaskService()
             "required": False
         }
     ],
+    "definitions": {
+        "to_return": {
+            "type": "object",
+            "properties": {
+                "total_items": {
+                    "$ref": "#/definitions/total_items"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        '$ref': "#/definitions/schema"
+                    }
+                }
+            }
+        },
+        "schema": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "completed": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "total_items": {
+            "type": "integer"
+        }
+    },
     'responses': {
         HTTPStatus.OK.value: {
-            'description': 'Welcome to the Flask Starter Kit',
-            'schema': TaskSchema
+            'description': 'A list of task that match the parameters',
+            'schema': {
+                "$ref": "#/definitions/to_return"
+            }
         }
     }
 })
@@ -39,10 +77,6 @@ def tasks():
     ---
     '''
     args = request.args
-    # if args.has_key("completed"):
-    #     completed = args.completed
-    # else:
-    #     completed = None
     return taskService.get_tasks(args.get('completed'), args.get('title')), 200
 
 
