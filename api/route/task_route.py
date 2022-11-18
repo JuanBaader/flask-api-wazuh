@@ -64,4 +64,4 @@ def task_by_id(tid):
     Method that returns a list a task specified by its id
     ---
     '''
-    return taskService.get_task_by_id(int(tid)), 200
+    return taskService.get_task_by_id(int(tid))

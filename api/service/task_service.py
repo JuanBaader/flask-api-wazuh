@@ -1,5 +1,5 @@
 from api.dao.task_dao import TaskDao
-from flask import jsonify
+from flask import jsonify, abort
 
 
 class TaskService:
@@ -21,5 +21,7 @@ class TaskService:
 
     def get_task_by_id(self, tid):
         task = self.taskDao.get_task_by_id(tid)
+        if not task:
+            abort(404)
         task_as_dic = task[0].to_dict()
-        return task_as_dic
+        return task_as_dic, 200
