@@ -20,8 +20,8 @@ class TaskDao:
     def get_task_by_id(self, task_id):
         return list(filter(lambda x: x.get_id() == task_id, self.tasks))
 
-    def get_task_by_user_id(self, user_id):
-        return list(filter(lambda x: x.get_user_id() == user_id, self.tasks))
-
-    def get_task_by_id_by_user_id(self, user_id, task_id):
-        return list(filter(lambda x: (x.get_user_id() == user_id and x.get_id() == task_id), self.tasks))
+    def get_task_by_user_id(self, user_id, completed=None, title=''):
+        return list(filter(lambda
+                               x: ((x.get_user_id() == user_id) and (title in x.get_title()) and
+                                   (True if completed is None else x.get_completed() == completed)),
+                           self.tasks))

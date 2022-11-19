@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from flask import Blueprint
+from flask import Blueprint, request
 from flasgger import swag_from
 from api.model.user_model import UserModel
 from api.schema.user_schema import UserSchema
@@ -151,6 +151,20 @@ def user_by_id(uid):
 @user_api.route('/<uid>/tasks')
 @swag_from({
     'tags': ['users', 'tasks'],
+    'parameters': [
+        {
+            'name': 'completed',
+            'in': 'path',
+            'type': 'bool',
+            'required': False
+        },
+        {
+            'name': 'title',
+            'in': 'path',
+            'type': 'string',
+            'required': False
+        }
+    ],
     'responses': {
         HTTPStatus.OK.value: {
             'description': 'Welcome to the Flask Starter Kit',
@@ -169,28 +183,5 @@ def user_tasks(uid):
     Method that returns a list task owned by a user by its id
     ---
     """
-    return user_service.get_tasks_of_user(uid)
-
-
-@user_api.route('/<uid>/tasks/<tid>')
-@swag_from({
-    'tags': ['users', 'tasks'],
-    'responses': {
-        HTTPStatus.OK.value: {
-            'description': 'Welcome to the Flask Starter Kit',
-            'schema': {
-                '$ref': '#/definitions/task_schema'
-            }
-        },
-        HTTPStatus.NOT_FOUND.value: {
-            'description': 'No user or task found with with specified id',
-        }
-    }
-})
-def user_task_by_id(uid, tid):
-    """
-    Returns one user's task
-    Method that returns one task given a user id and a task id
-    ---
-    """
-    return user_service.get_task_by_id_of_user(uid, tid)
+    args = request.args
+    return user_service.get_tasks_of_user(uid, args.get('completed'), args.get('title'))

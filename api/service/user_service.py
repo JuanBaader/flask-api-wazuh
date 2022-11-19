@@ -20,20 +20,12 @@ class UserService:
         user = user[0].to_dict()
         return user
 
-    def get_tasks_of_user(self, user_id):
+    def get_tasks_of_user(self, user_id, completed, title):
         if not user_id.isnumeric():
             abort(404)
         user = self.user_dao.get_user_by_id(int(user_id))
         if not user:
             abort(404)
-        tasks, _ = self.task_service.get_task_by_user_id(int(user_id))
+        tasks, _ = self.task_service.get_task_by_user_id(int(user_id), completed, title)
         return tasks, 200
 
-    def get_task_by_id_of_user(self, user_id, task_id):
-        if not user_id.isnumeric():
-            abort(404)
-        user = self.user_dao.get_user_by_id(int(user_id))
-        if not user:
-            abort(404)
-        task, _ = self.task_service.get_task_by_id_by_user_id(int(user_id), int(task_id))
-        return task, 200

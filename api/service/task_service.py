@@ -28,15 +28,16 @@ class TaskService:
         task_as_dic = task[0].to_dict()
         return task_as_dic, 200
     
-    def get_task_by_user_id(self, user_id):
-        tasks = self.taskDao.get_task_by_user_id(user_id)
+    def get_task_by_user_id(self, user_id, completed, title):
+        if title is None:
+            title = ''
+        if completed is not None:
+            if completed.lower() == 'true':
+                completed = True
+            elif completed.lower() == 'false':
+                completed = False
+        tasks = self.taskDao.get_task_by_user_id(user_id, completed=completed, title=title)
         tasks = list(map(lambda x: x.to_dict(), tasks))
         to_return = {"total_items": len(tasks),
                      "data": tasks}
         return to_return, 200
-
-    def get_task_by_id_by_user_id(self, user_id, task_id):
-        task = self.taskDao.get_task_by_id_by_user_id(int(user_id), int(task_id))
-        if not task:
-            abort(404)
-        return task[0].to_dict(), 200
